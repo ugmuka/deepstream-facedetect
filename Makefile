@@ -11,9 +11,10 @@ run:
 		--net=host \
 		--gpus all \
 		--runtime nvidia \
+		--name $(CONTAINER) \
 		--device=/dev/video0:/dev/video0 \
 		-e DISPLAY=$(DISPLAY) \
-		-w /opt/nvidia/deepstream/deepstream/sources/python \
-		-v $(PWD):/opt/nvidia/deepstream/deepstream/sources/python \
+		-w /opt/nvidia/deepstream/deepstream/sources/python/apps \
+		-v `pwd`:/opt/nvidia/deepstream/deepstream/sources/python/apps \
 		-v /tmp/.X11-unix/:/tmp/.X11-unix \
 		$(IMAGE):$(TAG)
