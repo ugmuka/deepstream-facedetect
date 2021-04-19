@@ -1,0 +1,33 @@
+version: "3"
+services:
+  deepstream_l4t:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: deepstream-l4t-facedetect
+    networks: 
+      - host
+    runtime: nvidia
+    container_name: deepstream_l4t
+    devices: 
+      - "/dev/video0:/dev/video0"
+    working_dir: /opt/nvidia/deepstream/deepstream/sources/python/apps
+    environment:
+      - DISPLAY=${DISPLAY}
+    volumes:
+      - ./:/opt/nvidia/deepstream/deepstream/sources/python/apps
+      - /tmp/.X11-unix/:/tmp/.X11-unix
+  rabbitmq:
+    image: rabbitmq:3.8-management
+    hostname: rabbitmq
+    container_name: rabbitmq
+    expose:
+      - "5672"
+      - "15672"
+    ports: 
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - ./rabbitmq:/etc/rabbitmq
+  # networks:
+  #   default:
